@@ -21,6 +21,7 @@ byte LoadNext(ifstream& stream, string part = "" /* for example: header, prg, ch
 bool GetBit(byte value, int p);
 
 // Get k bits from p position
-byte GetBits(byte value, int p, int k);
+#define GetBits(value, p, k) ((1 << k) - 1) & (value >> p)
+//byte GetBits(byte value, int p, int k);
 
 void SetBit(byte& number, int p, bool value);

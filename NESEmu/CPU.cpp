@@ -16,10 +16,22 @@ void CPU::PushToStack(byte value)
 	sp--; // descending empty stack
 }
 
+void CPU::Push2ToStack(uint16_t value)
+{
+	PushToStack(GetBits(value, 0, 8)); // Lower bytes
+	PushToStack(GetBits(value, 8, 8)); // Higher bytes
+}
+
 byte CPU::PullFromStack()
 {
 	sp++; // descending empty stack
 	return GetByte(STACK_BOTTOM + sp);
+}
+
+uint16_t CPU::Pull2FromStack()
+{
+	//return uint16_t();
+	return (((uint16_t)PullFromStack()) << 8) + PullFromStack();
 }
 
 void CPU::Reset()

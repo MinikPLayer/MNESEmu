@@ -22,10 +22,10 @@ bool GetBit(byte value, int p)
 	return (value >> p) & 1;
 }
 
-byte GetBits(byte value, int p, int k)
+/*byte GetBits(byte value, int p, int k)
 {
 	return ((1 << k) - 1) & (value >> p);
-}
+}*/
 
 void SetBit(byte& number, int p, bool value)
 {
