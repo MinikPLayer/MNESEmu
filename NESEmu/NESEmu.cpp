@@ -7,8 +7,8 @@ int main()
     std::cout << "Hello World!\n";
 
     NES n;
-    cout << "Loading ROM result: " << n.LoadROM("hello.nes") << endl;
-    n.Run();
+    cout << "Loading ROM result: " << n.LoadROM("test.nes") << endl;
+    n.Run(0xC000); // because of test.nes automation utility
 
     return 0;
 }

@@ -10,9 +10,12 @@ bool NES::LoadROM(string path)
 	return rom.Load(path);
 }
 
-void NES::Run()
+void NES::Run(uint16_t overridePC)
 {
-	cpu.Reset();
+	if (overridePC != 0)
+		cpu.Reset(overridePC);
+	else
+		cpu.Reset();
 
 	/* LOGP("DEBUG!", "NES::Run");
 	LOGP("Value at 0xFFFC: " << memory[0xFFFC], "NES::Run");
@@ -29,6 +32,9 @@ NES::NES()
 	:cpu(this)
 {
 	memory.AddModule(&rom);
+	memory.AddModule(&ram);
+	memory.AddModule(&ppu.reg);
+	memory.AddModule(&apu.reg);
 }
 
 static byte nullValue;

@@ -5,10 +5,34 @@ void CPU::SetFlag(Flags flag, bool value)
 	SetBit(sr, (int)flag, value);
 }
 
+bool CPU::GetFlag(Flags flag)
+{
+	return GetBit(sr, (int)flag);
+}
+
+void CPU::PushToStack(byte value)
+{
+	SetByte(STACK_BOTTOM + sp, value);
+	sp--; // descending empty stack
+}
+
+byte CPU::PullFromStack()
+{
+	sp++; // descending empty stack
+	return GetByte(STACK_BOTTOM + sp);
+}
+
 void CPU::Reset()
 {
-	pc = ((uint16_t)(nes->memory[0xFFFD]) << 8) + nes->memory[0xFFFC];
+	sp = 0xFF;
+	pc = ((uint16_t)GetByteRaw(0xFFFD) << 8) + GetByteRaw(0xFFFC);
 	LOGP("PC: 0x" << std::hex << pc, "CPU::Reset");
+}
+
+void CPU::Reset(uint16_t overridePC)
+{
+	Reset();
+	pc = overridePC;
 }
 
 void CPU::Tick()
@@ -25,13 +49,18 @@ void CPU::Tick()
 	int result = Execute(instr);
 	if (result == -1) return;
 
-	pc += result;
+	if (!skipPCIncrement)
+		pc++;
+	else
+		skipPCIncrement = false;
+
+	skipCycles = result;
 }
 
 int CPU::Execute(byte instr)
 {
 	Instruction opcode = opcodes[instr];
-	LOGP("Executing " << opcode.opcode, "CPU");
+	LOGP("Executing " << opcode.opcode << " at 0x" << hex << pc, "CPU");
 	return (this->*(opcode.func))();
 
 	LOGP("Cannot execute opcode", "CPU::Exceute");
@@ -45,6 +74,14 @@ CPU::CPU(NES* nes)
 	FillOpcodes();
 }
 
+void CPU::SetReadFlags(byte val)
+{
+	if (val > 127) // 7-th bit is set: set negative bit to 1
+		SetFlag(Negative, true);
+	else if (val == 0)
+		SetFlag(Zero, true);
+}
+
 CPU::Instruction::Instruction(string opcode, int(CPU::*func)())
 {
 	this->opcode = opcode;
@@ -55,7 +92,8 @@ int CPU::NotImplementedFunction()
 {
 	byte opcode = GetOpcode();
 
-	LOGP("Opcode 0x" << std::hex << (int)opcode << " not implemented", "CPU");
+	LOGP("\n\nOpcode     0x" << std::hex << (int)opcode << "     not implemented\n\n", "CPU");
+	
 	throw exception("Opcode not implemented");
 	return 0;
 }
@@ -68,5 +106,28 @@ CPU::Instruction::Instruction()
 
 byte CPU::GetOpcode()
 {
-	return nes->memory[pc];
+	return GetByteRaw(pc); //nes->memory[pc];
+}
+
+byte CPU::GetByteRaw(uint16_t address)
+{
+	return nes->memory[address];
+}
+
+byte CPU::GetByte(uint16_t address)
+{
+	byte val = GetByteRaw(address);//nes->memory[address];
+	SetReadFlags(val);
+
+	return val;
+}
+
+uint16_t CPU::Get2Bytes(uint16_t address)
+{
+	return GetByteRaw(address) + (GetByteRaw(address + 1) << 8);
+}
+
+void CPU::SetByte(uint16_t address, byte value)
+{
+	nes->memory[address] = value;
 }

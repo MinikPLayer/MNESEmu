@@ -20,23 +20,25 @@ public:
 		if (IsBetween(absolute, 0x8000, 0xFFFF))
 		{
 			uint16_t addr = absolute - 0x8000;
-			LOGP("Reading from memory at 0x" << std::hex << absolute << " - relative address is 0x" << std::hex << addr, "Mapper " << id);
+			//LOGP("Reading from memory at 0x" << std::hex << absolute << " - relative address is 0x" << std::hex << addr, "Mapper " << id);
 			if (addr >= prg.size()) // if 16KB PRG is loaded and trying to load 32KB address space
 			{
 				addr -= prg.size();
 				if (addr >= prg.size())
 				{
-					LOGP("Trying to read memory outside of the PRG memory at: " << (absolute - 0x8000) , "Mapper " << id);
+					LOGP("Trying to read memory outside of the PRG memory at: " << (absolute - 0x8000) , "Mapper" << id << "::Read");
 					throw exception("MapperBadRead");
 					return MemoryModule::nullValue;
 				}
 			}
-			LOGP("Final relative read address: 0x" << std::hex << addr, "Mapper " << id);
-
+			//LOGP("Final relative read address: 0x" << std::hex << addr, "Mapper " << id);
+#if LOG_MEM == true
+			LOGP("Reading from 0x" << hex << absolute << ": 0x" << hex << (int)prg[addr], "Mapper" << id << "::Read");
+#endif
 			return prg[addr];
 		}
 
-		LOGP("Trying to read unmapped mapper memory at " << absolute - 0x8000, "Mapper " << id);
+		LOGP("Trying to read unmapped mapper memory at " << absolute - 0x8000, "Mapper" << id << "::Read");
 		throw exception("MapperBadRead");
 		return MemoryModule::nullValue;
 	}

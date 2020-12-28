@@ -151,15 +151,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="APU.cpp" />
     <ClCompile Include="CPU.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="NES.cpp" />
     <ClCompile Include="NESEmu.cpp" />
     <ClCompile Include="Opcodes.cpp" />
+    <ClCompile Include="PPU.cpp" />
+    <ClCompile Include="RAM.cpp" />
     <ClCompile Include="ROM.cpp" />
     <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="APU.h" />
     <ClInclude Include="CPU.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Mapper.h" />
@@ -167,6 +171,8 @@
     <ClInclude Include="Memory.h" />
     <ClInclude Include="NES.h" />
     <ClInclude Include="Opcodes.h" />
+    <ClInclude Include="PPU.h" />
+    <ClInclude Include="RAM.h" />
     <ClInclude Include="ROM.h" />
     <ClInclude Include="Util.h" />
   </ItemGroup>
