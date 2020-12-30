@@ -23,10 +23,14 @@ public:
 	protected:
 		vector<MemoryModule*> modules;
 
+		MemoryModule* GetModule(uint16_t address);
+
 	public:
 		void AddModule(MemoryModule* module);
 
-		byte& operator[](int);
+		//byte& operator[](int);
+		byte Read(uint16_t address);
+		bool Write(uint16_t address, byte value);
 	};
 
 	//byte ReadMemory(uint16_t address);

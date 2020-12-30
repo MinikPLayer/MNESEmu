@@ -39,12 +39,36 @@ NES::NES()
 
 static byte nullValue;
 
+MemoryModule* NES::MemoryMap::GetModule(uint16_t address)
+{
+	for (int i = 0; i < modules.size(); i++)
+	{
+		if (modules[i] == nullptr)
+		{
+			modules.erase(modules.begin() + i, modules.begin() + i + 1);
+			i--;
+			continue;
+		}
+
+		if (IsBetween(address, modules[i]->minAddr, modules[i]->maxAddr))
+		{
+			return modules[i];
+		}
+	}
+
+
+	LOGP("Trying to access unmapped memory at " << std::hex << address, "NES::MemoryMap");
+	throw exception("UnmappedMemoryAccess");
+
+	return nullptr;
+}
+
 void NES::MemoryMap::AddModule(MemoryModule* module)
 {
 	modules.push_back(module);
 }
 
-byte& NES::MemoryMap::operator[](int n)
+/*byte& NES::MemoryMap::operator[](int n)
 {
 	// TODO: tu wstawiæ instrukcjê return
 	for (int i = 0; i < modules.size(); i++)
@@ -66,4 +90,22 @@ byte& NES::MemoryMap::operator[](int n)
 	throw exception("UnmappedMemoryAccess");
 
 	return nullValue;
+}*/
+
+byte NES::MemoryMap::Read(uint16_t address)
+{
+	MemoryModule* module = GetModule(address);
+	if (module == nullptr) 
+		return 0;
+
+	return module->Read(address - module->minAddr);
+}
+
+bool NES::MemoryMap::Write(uint16_t address, byte value)
+{
+	MemoryModule* module = GetModule(address);
+	if (module == nullptr)
+		return 0;
+
+	return module->Write(address - module->minAddr, value);
 }
