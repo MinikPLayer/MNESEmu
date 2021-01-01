@@ -38,7 +38,7 @@ public:
 			return prg[addr];
 		}
 
-		LOGP("Trying to read unmapped mapper memory at " << absolute - 0x8000, "Mapper" << id << "::Read");
+		LOGP("Trying to read unmapped mapper memory at 0x" << hex << absolute - 0x8000, "Mapper" << id << "::Read");
 		throw exception("MapperBadRead");
 		return MemoryModule::nullValue;
 	}

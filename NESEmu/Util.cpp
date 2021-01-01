@@ -1,5 +1,18 @@
 #include "Util.h"
 
+ofstream logStream;
+void InitLog(string filePath)
+{
+	logStream.open(filePath);
+	if (!(logStream.good()))
+	{
+		LOGP("ERROR OPENING LOG FILE", "!!LOG!!");
+	}
+}
+void CloseLog()
+{
+	logStream.close();
+}
 byte LoadNext(ifstream& stream, string part)
 {
 	byte b;

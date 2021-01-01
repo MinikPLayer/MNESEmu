@@ -58,7 +58,7 @@ public:
 	bool Load(string path);
 
 	ROM(uint16_t minAddr = ROM_ADDR, uint16_t maxAddr = 0xFFFF, ROM* mirrorParent = nullptr)
-		:MemoryModule("ROM", true /* to change mappers banks */, true, minAddr, maxAddr, mirrorParent)
+		:MemoryModule("ROM", false /*DEBUG OFF*/ /* true to change mappers banks */, true, minAddr, maxAddr, mirrorParent)
 	{
 
 	}

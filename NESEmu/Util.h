@@ -6,14 +6,19 @@
 #include <string>
 using namespace std;
 
+extern ofstream logStream;
+
 #define IsBetween(x, low, high) (x >= low && x <= high)
 
 
-#define LOGN(data) cout << data;
+#define LOGN(data) { /*cout << data;*/ logStream << data; }
 
 #define LOGE(data, prefix, nl) LOGN("[" << prefix << "] " << data << nl);
 #define LOGP(data, prefix) LOGE(data, prefix, "\n");
 #define LOG(data) LOGN(data << endl);
+
+void InitLog(string filePath = "log.txt");
+void CloseLog();
 
 byte LoadNext(ifstream& stream, string part = "" /* for example: header, prg, chr, etc */);
 

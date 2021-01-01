@@ -22,7 +22,7 @@ void NES::Run(uint16_t overridePC)
 	LOGP("Value at 0xFFFD: " << memory[0xFFFD], "NES::Run");
 	LOGP("Value at 0x0000: " << memory[0x0000], "NES::Run");*/
 
-	while (true)
+	while (cpu.running)
 	{
 		cpu.Tick();
 	}
@@ -41,6 +41,14 @@ static byte nullValue;
 
 MemoryModule* NES::MemoryMap::GetModule(uint16_t address)
 {
+	if (IsBetween(address, 0x2008, 0x3FFF)) // PPU mirrors
+	{
+		// Redirect to PPU directly
+		address -= 0x2000;
+		address %= 8;
+		address += 0x2000;
+	}
+
 	for (int i = 0; i < modules.size(); i++)
 	{
 		if (modules[i] == nullptr)
@@ -57,7 +65,7 @@ MemoryModule* NES::MemoryMap::GetModule(uint16_t address)
 	}
 
 
-	LOGP("Trying to access unmapped memory at " << std::hex << address, "NES::MemoryMap");
+	LOGP("Trying to access unmapped memory at 0x" << std::hex << address, "NES::MemoryMap");
 	throw exception("UnmappedMemoryAccess");
 
 	return nullptr;
