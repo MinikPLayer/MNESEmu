@@ -16,7 +16,7 @@ protected:
 	// Virtual function to write to memory - returns if succeeded 
 	virtual bool _Write(uint16_t address, byte value) { LOGP("Memory write is not implemented!", name); return false; }
 	// Virtual function to read from memory - returns read value
-	virtual byte& _Read(uint16_t address) { LOGP("Memory read is not implemented!", name); return nullValue; }
+	virtual byte _Read(uint16_t address) { LOGP("Memory read is not implemented!", name); return nullValue; }
 
 	MemoryModule* mirrorParent;
 public:
@@ -29,7 +29,7 @@ public:
 	static byte nullValue;
 
 	// General wrapper for _Read function, returns read value or "nullValue" ( undefined value ) when not readable
-	byte& Read(uint16_t address)
+	byte Read(uint16_t address)
 	{
 		if (readable)
 		{

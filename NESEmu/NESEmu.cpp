@@ -8,11 +8,11 @@ int main()
 
     InitLog();
     NES n;
-    cout << "Loading ROM result: " << n.LoadROM("test.nes") << endl;
+    cout << "Loading ROM result: " << n.LoadROM("ppu.nes") << endl;
     try
     {
-        n.Run(0xC000); // because of test.nes automation utility
-        //n.Run();
+        //n.Run(0xC000); // because of test.nes automation utility
+        n.Run();
     }
     catch (exception e)
     {

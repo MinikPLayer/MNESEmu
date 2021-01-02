@@ -15,7 +15,7 @@ class ROM : public MemoryModule
 {	
 	bool _Load(string path);
 
-	byte& _Read(uint16_t address);
+	byte _Read(uint16_t address);
 	Mapper* mapper = nullptr;
 public:
 	const static uint16_t ROM_ADDR = 0x4020;

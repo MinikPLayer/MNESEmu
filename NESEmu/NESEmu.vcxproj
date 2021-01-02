@@ -154,9 +154,11 @@
     <ClCompile Include="APU.cpp" />
     <ClCompile Include="CPU.cpp" />
     <ClCompile Include="Memory.cpp" />
+    <ClCompile Include="MemoryMap.cpp" />
     <ClCompile Include="NES.cpp" />
     <ClCompile Include="NESEmu.cpp" />
     <ClCompile Include="Opcodes.cpp" />
+    <ClCompile Include="PatternTable.cpp" />
     <ClCompile Include="PPU.cpp" />
     <ClCompile Include="RAM.cpp" />
     <ClCompile Include="ROM.cpp" />
@@ -169,8 +171,10 @@
     <ClInclude Include="Mapper.h" />
     <ClInclude Include="Mappers.h" />
     <ClInclude Include="Memory.h" />
+    <ClInclude Include="MemoryMap.h" />
     <ClInclude Include="NES.h" />
     <ClInclude Include="Opcodes.h" />
+    <ClInclude Include="PatternTable.h" />
     <ClInclude Include="PPU.h" />
     <ClInclude Include="RAM.h" />
     <ClInclude Include="ROM.h" />

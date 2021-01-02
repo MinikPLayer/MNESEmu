@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "Defines.h"
+#include "MemoryMap.h"
 using namespace std;
 
 #pragma region Modules Includes
@@ -18,20 +19,7 @@ class NES
 {
 
 public:
-	class MemoryMap
-	{
-	protected:
-		vector<MemoryModule*> modules;
 
-		MemoryModule* GetModule(uint16_t address);
-
-	public:
-		void AddModule(MemoryModule* module);
-
-		//byte& operator[](int);
-		byte Read(uint16_t address);
-		bool Write(uint16_t address, byte value);
-	};
 
 	//byte ReadMemory(uint16_t address);
 	MemoryMap memory;

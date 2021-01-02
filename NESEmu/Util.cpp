@@ -3,15 +3,19 @@
 ofstream logStream;
 void InitLog(string filePath)
 {
+#if FILE_LOG
 	logStream.open(filePath);
 	if (!(logStream.good()))
 	{
 		LOGP("ERROR OPENING LOG FILE", "!!LOG!!");
 	}
+#endif
 }
 void CloseLog()
 {
+#if FILE_LOG
 	logStream.close();
+#endif
 }
 byte LoadNext(ifstream& stream, string part)
 {

@@ -162,7 +162,8 @@ int CPU::NotImplementedFunction()
 {
 	byte opcode = GetOpcode();
 
-	LOGP("\n\nOpcode     0x" << std::hex << (int)opcode << "     not implemented\n\n", "!CPU!");
+	//LOGP("\n\nOpcode     0x" << std::hex << (int)opcode << "     not implemented\n\n", "!CPU!");
+	cout << "[!CPU!]" << "\n\nOpcode     0x" << std::hex << (int)opcode << "     not implemented\n\n";
 	bool found = false;
 	for (int i = 0; i < unimplementedOpcodes.size(); i++)
 	{

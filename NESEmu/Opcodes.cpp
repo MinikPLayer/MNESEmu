@@ -709,7 +709,7 @@ int CPU::BCS()
 	if(GetFlag(Carry))
 	{
 		byte offset = GetByteRaw(pc);
-		pc += offset;
+		pc += (char)offset;
 
 		return 3;
 	}
@@ -722,7 +722,7 @@ int CPU::BCC()
 	if (!GetFlag(Carry))
 	{
 		byte offset = GetByteRaw(pc);
-		pc += offset;
+		pc += (char)offset;
 
 		return 3;
 	}
@@ -736,7 +736,7 @@ int CPU::BEQ()
 	if (GetFlag(Zero))
 	{
 		byte offset = GetByteRaw(pc);
-		pc += offset;
+		pc += (char)offset;
 
 		return 3;
 	}
@@ -764,7 +764,7 @@ int CPU::BVS()
 	if (GetFlag(Overflow))
 	{
 		byte offset = GetByteRaw(pc);
-		pc += offset;
+		pc += (char)offset;
 
 		return 3;
 	}
@@ -778,7 +778,7 @@ int CPU::BVC()
 	if (!GetFlag(Overflow))
 	{
 		byte offset = GetByteRaw(pc);
-		pc += offset;
+		pc += (char)offset;
 
 		return 3;
 	}
@@ -792,7 +792,7 @@ int CPU::BMI()
 	if (GetFlag(Negative))
 	{
 		byte offset = GetByteRaw(pc);
-		pc += offset;
+		pc += (char)offset;
 
 		return 3;
 	}
@@ -806,7 +806,7 @@ int CPU::BPL()
 	if (!GetFlag(Negative))
 	{
 		byte offset = GetByteRaw(pc);
-		pc += offset;
+		pc += (char)offset;
 
 		return 3;
 	}

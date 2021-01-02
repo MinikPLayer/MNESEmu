@@ -18,7 +18,7 @@ bool RAM::_Write(uint16_t address, byte value)
     return true;
 }
 
-byte& RAM::_Read(uint16_t address)
+byte RAM::_Read(uint16_t address)
 {
     // TODO: tu wstawiæ instrukcjê return
     if (address >= memSize)

@@ -9,7 +9,7 @@ class RAM : public MemoryModule
 	// Implementation of virtual functions
 
 	bool _Write(uint16_t address, byte value);
-	byte& _Read(uint16_t address);
+	byte _Read(uint16_t address);
 
 
 	// RAM memory

@@ -10,8 +10,22 @@ extern ofstream logStream;
 
 #define IsBetween(x, low, high) (x >= low && x <= high)
 
+#define FILE_LOG false
+#define CONSOLE_LOG true
 
-#define LOGN(data) { /*cout << data;*/ logStream << data; }
+#if FILE_LOG
+	#if CONSOLE_LOG
+		#define LOGN(data) {cout << data; logStream << data; }
+	#else
+		#define LOGN(data) { logStream << data; }
+	#endif
+#else
+#if CONSOLE_LOG
+		#define LOGN(data) {cout << data;}
+	#else
+		#define LOGN(data) {}
+	#endif
+#endif
 
 #define LOGE(data, prefix, nl) LOGN("[" << prefix << "] " << data << nl);
 #define LOGP(data, prefix) LOGE(data, prefix, "\n");

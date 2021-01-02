@@ -119,7 +119,7 @@ bool ROM::_Load(string path)
 	return true;
 }
 
-byte& ROM::_Read(uint16_t address)
+byte ROM::_Read(uint16_t address)
 {
 	return mapper->Read(address);
 }
